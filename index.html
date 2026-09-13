@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CodeQuest - Coding Learning Game</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:#0b1020;color:#eef2ff}
+header{padding:18px 28px;border-bottom:1px solid #26304d;display:flex;justify-content:space-between;align-items:center;background:#10172b;position:sticky;top:0;z-index:5}
+.logo{font-size:24px;font-weight:800}.logo span{color:#6ea8fe}
+button{border:0;border-radius:10px;padding:11px 16px;cursor:pointer;font-weight:700;background:#6ea8fe;color:#08111f}
+button.secondary{background:#202a44;color:#eef2ff}button.danger{background:#c94b5a;color:white}
+main{max-width:1200px;margin:auto;padding:28px}.hidden{display:none!important}
+.card{background:#111a31;border:1px solid #273250;border-radius:16px;padding:20px;box-shadow:0 10px 30px #0003}
+.auth{max-width:480px;margin:60px auto}.tabs{display:flex;gap:8px;margin-bottom:18px}.tabs button{flex:1}
+input,textarea,select{width:100%;padding:12px;border:1px solid #34415f;border-radius:10px;background:#0a1122;color:#fff;margin:7px 0 12px}
+textarea{min-height:240px;resize:vertical;font-family:Consolas,monospace}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.lang{cursor:pointer;transition:.2s}.lang:hover{transform:translateY(-3px);border-color:#6ea8fe}.icon{font-size:34px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}.stat{padding:15px;background:#18223d;border-radius:12px;text-align:center}.stat b{display:block;font-size:24px}
+.levels{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}.level{padding:15px;background:#151f37;border:1px solid #293653;border-radius:12px;cursor:pointer}.level.done{border-color:#38c992}.level.lock{opacity:.55}
+pre{background:#080d19;border:1px solid #293653;padding:15px;border-radius:10px;overflow:auto;white-space:pre-wrap}
+.lesson-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.topline{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.badge{padding:5px 9px;border-radius:20px;background:#23304e;font-size:12px}.ok{color:#4fe0a4}.err{color:#ff7b89}
+@media(max-width:750px){.stats{grid-template-columns:1fr 1fr}.lesson-grid{grid-template-columns:1fr}header{padding:14px}.logo{font-size:19px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">🎮 Code<span>Quest</span></div>
+  <div id="headerUser"></div>
+</header>
+
+<main>
+<section id="auth" class="auth card">
+  <h1>Learn Coding by Playing</h1>
+  <p>React/HTML frontend connected to your Spring Boot backend.</p>
+  <div class="tabs"><button id="loginTab">Login</button><button class="secondary" id="registerTab">Register</button></div>
+  <div id="authForm"></div>
+  <p id="authMsg"></p>
+</section>
+
+<section id="dashboard" class="hidden">
+  <div class="topline"><div><h1>🚀 Coding Dashboard</h1><p>Select a language and start your 50-level journey.</p></div><button class="danger" onclick="logout()">Logout</button></div>
+  <div class="stats">
+    <div class="stat">⭐ XP<b id="xp">0</b></div>
+    <div class="stat">🪙 Coins<b id="coins">100</b></div>
+    <div class="stat">🏆 Player Level<b id="playerLevel">1</b></div>
+    <div class="stat">✅ Completed<b id="completed">0</b></div>
+  </div>
+  <div class="card"><h2>Choose Language</h2><div id="languages" class="grid"></div></div>
+  <div id="levelsBox" class="card hidden" style="margin-top:18px">
+    <div class="topline"><h2 id="levelsTitle"></h2><button class="secondary" onclick="backToLanguages()">Back</button></div>
+    <div id="levels" class="levels"></div>
+  </div>
+</section>
+
+<section id="lesson" class="hidden">
+  <div class="topline">
+    <div><span id="lessonLang" class="badge"></span><h1 id="lessonTitle"></h1></div>
+    <button class="secondary" onclick="backToLevels()">← Levels</button>
+  </div>
+  <div class="lesson-grid">
+    <div class="card">
+      <h2>📖 Explanation</h2><p id="explanation"></p>
+      <h2>⌨️ Syntax</h2><pre id="syntax"></pre>
+      <h2>💡 Example</h2><pre id="example"></pre>
+      <p id="exampleExplanation"></p>
+      <h2>🎯 Problem</h2><p id="problem"></p>
+    </div>
+    <div class="card">
+      <h2>🧑‍💻 Coding Editor</h2>
+      <textarea id="code" placeholder="Write your code here..."></textarea>
+      <button onclick="submitCode()">Run / Check Code</button>
+      <button class="secondary" onclick="askAI()">🤖 AI Tutor</button>
+      <p id="codeResult"></p>
+      <hr style="border-color:#293653">
+      <button onclick="completeLevel()">✅ Complete Level +50 XP</button>
+      <p id="completeResult"></p>
+    </div>
+  </div>
+</section>
+</main>
+
+<script>
+const API="http://localhost:8080/api";
+let currentLanguage="", currentLevel=0, user=JSON.parse(localStorage.getItem("cq_user")||"null");
+
+const $=id=>document.getElementById(id);
+function show(id){$(id).classList.remove("hidden")}
+function hide(id){$(id).classList.add("hidden")}
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+
+function authUI(mode="login"){
+  $("authForm").innerHTML=mode==="login"?`
+    <label>Email</label><input id="email" type="email" placeholder="you@example.com">
+    <label>Password</label><input id="password" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>`:`
+    <label>Name</label><input id="name" placeholder="Your name">
+    <label>Email</label><input id="email" type="email" placeholder="you@example.com">
+    <label>Password</label><input id="password" type="password" placeholder="Password">
+    <button onclick="register()">Create Account</button>`;
+  $("authMsg").textContent="";
+}
+$("loginTab").onclick=()=>authUI("login");
+$("registerTab").onclick=()=>authUI("register");
+authUI();
+
+async function api(path,options={}){
+  const res=await fetch(API+path,{headers:{"Content-Type":"application/json",...(options.headers||{})},...options});
+  const data=await res.json().catch(()=>({}));
+  if(!res.ok) throw new Error(data.message||"Request failed");
+  return data;
+}
+async function register(){
+  try{
+    const data=await api("/auth/register",{method:"POST",body:JSON.stringify({name:$("name").value,email:$("email").value,password:$("password").value})});
+    $("authMsg").className="ok";$("authMsg").textContent=data.message+" Now login.";
+    authUI("login");
+  }catch(e){$("authMsg").className="err";$("authMsg").textContent=e.message}
+}
+async function login(){
+  try{
+    const data=await api("/auth/login",{method:"POST",body:JSON.stringify({email:$("email").value,password:$("password").value})});
+    user=data;localStorage.setItem("cq_user",JSON.stringify(user));openDashboard();
+  }catch(e){$("authMsg").className="err";$("authMsg").textContent=e.message}
+}
+function logout(){localStorage.removeItem("cq_user");user=null;location.reload()}
+
+async function openDashboard(){
+  hide("auth");hide("lesson");show("dashboard");
+  $("headerUser").innerHTML=`<span class="badge">👤 ${esc(user.name)}</span>`;
+  await loadProgress(); await loadLanguages();
+}
+async function loadProgress(){
+  if(!user)return;
+  try{const p=await api("/progress?email="+encodeURIComponent(user.email));$("xp").textContent=p.xp;$("coins").textContent=p.coins;$("playerLevel").textContent=p.level;$("completed").textContent=p.completedLevels;user={...user,...p};localStorage.setItem("cq_user",JSON.stringify(user))}
+  catch(e){}
+}
+async function loadLanguages(){
+  const data=await api("/courses/languages");
+  $("languages").innerHTML=data.map(l=>`<div class="card lang" onclick="loadLevels('${l.code}')"><div class="icon">${l.icon}</div><h3>${esc(l.name)}</h3><p>${esc(l.description)}</p><span class="badge">50 Levels</span></div>`).join("");
+}
+async function loadLevels(lang){
+  currentLanguage=lang;show("levelsBox");
+  const data=await api(`/courses/${lang}/levels`);
+  $("levelsTitle").textContent=lang.toUpperCase()+" — 50 Levels";
+  $("levels").innerHTML=data.map(l=>`<div class="level" onclick="openLesson('${lang}',${l.level})"><b>${l.level}. ${esc(l.title.replace(/^Level \\d+: /,""))}</b><p>+${l.xpReward} XP · +${l.coinReward} 🪙</p></div>`).join("");
+  $("levelsBox").scrollIntoView({behavior:"smooth"});
+}
+function backToLanguages(){hide("levelsBox")}
+async function openLesson(lang,n){
+  currentLanguage=lang;currentLevel=n;
+  hide("dashboard");show("lesson");
+  const l=await api(`/courses/${lang}/levels/${n}`);
+  $("lessonLang").textContent=lang.toUpperCase();
+  $("lessonTitle").textContent=l.title;
+  $("explanation").textContent=l.explanation;
+  $("syntax").textContent=l.syntax;
+  $("example").textContent=l.exampleCode;
+  $("exampleExplanation").textContent=l.exampleExplanation;
+  $("problem").textContent=l.problem;
+  $("code").value="";
+  $("codeResult").textContent="";$("completeResult").textContent="";
+}
+function backToLevels(){hide("lesson");show("dashboard");loadLevels(currentLanguage);loadProgress()}
+async function submitCode(){
+  try{
+    const r=await api("/code/submit",{method:"POST",body:JSON.stringify({language:currentLanguage,code:$("code").value})});
+    $("codeResult").className=r.success?"ok":"err";$("codeResult").textContent=r.message+" Score: "+r.score;
+  }catch(e){$("codeResult").className="err";$("codeResult").textContent=e.message}
+}
+async function completeLevel(){
+  try{
+    const r=await api(`/progress/${currentLanguage}/${currentLevel}/complete`,{method:"POST",body:JSON.stringify({email:user.email})});
+    $("completeResult").className="ok";$("completeResult").textContent=r.message+" XP: "+r.xp+" | Coins: "+r.coins;
+    await loadProgress();
+  }catch(e){$("completeResult").className="err";$("completeResult").textContent=e.message}
+}
+async function askAI(){
+  try{
+    const r=await api("/ai/help",{method:"POST",body:JSON.stringify({type:"hint",language:currentLanguage,code:$("code").value})});
+    $("codeResult").className="ok";$("codeResult").textContent="🤖 "+r.answer;
+  }catch(e){$("codeResult").className="err";$("codeResult").textContent=e.message}
+}
+if(user)openDashboard();
+</script>
+</body>
+</html>
