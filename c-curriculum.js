@@ -1,0 +1,568 @@
+// Complete C Programming Course: 50 levels following W3Schools-style syllabus
+// Phase 1 (1-10): Fundamentals, Phase 2 (11-18): Logic & Repetition,
+// Phase 3 (19-27): Functions & Pointers, Phase 4 (28-36): Structures & Memory,
+// Phase 5 (37-44): Files & Advanced C, Phase 6 (45-50): Projects & Interview Prep
+
+const cChapters = [
+  { id: 1, name: "C Fundamentals", range: [1, 10], icon: "🌲", biome: "forest", biomeTitle: "C Foundations Forest" },
+  { id: 2, name: "Logic & Repetition", range: [11, 18], icon: "⚡", biome: "thunder", biomeTitle: "Logic & Loop Highlands" },
+  { id: 3, name: "Functions & Pointers", range: [19, 27], icon: "💎", biome: "crystal", biomeTitle: "Pointer Crystal Caverns" },
+  { id: 4, name: "Structures & Memory", range: [28, 36], icon: "🌋", biome: "volcano", biomeTitle: "Memory Forge Volcano" },
+  { id: 5, name: "Files & Advanced C", range: [37, 44], icon: "🌌", biome: "cosmic", biomeTitle: "Advanced C Cosmos" },
+  { id: 6, name: "Projects & Interview Prep", range: [45, 50], icon: "🏰", biome: "cosmic", biomeTitle: "Master C Citadel" }
+];
+
+const cLevels = [
+  {
+    level: 1,
+    title: "Introduction to C and Your First Program",
+    chapter: "C Fundamentals",
+    problem: "Write a C program that prints 'Hello, World!' to the console using printf.",
+    hint: "Use #include <stdio.h>, then printf(\"Hello, World!\\n\"); inside main.",
+    expectedOutput: "Hello, World!",
+    syntax: { c: "#include <stdio.h>\nint main(void) {\n    printf(\"Hello, World!\\n\");\n    return 0;\n}" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    printf(\"Welcome to C!\\n\");\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 1: Hello World [EASY]\n    // Objective: Print 'Hello, World!'\n\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 2,
+    title: "C Syntax, Statements and Comments",
+    chapter: "C Fundamentals",
+    problem: "Write a C program with a single-line comment and a multi-line comment. Print 'Learning C' on one line and 'Level 2' on the next.",
+    hint: "Use // for single-line, /* */ for multi-line. Two printf statements.",
+    expectedOutput: "Learning C\nLevel 2",
+    syntax: { c: "// Single-line comment\n/* Multi-line comment */\nprintf(\"Text\\n\");" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    // Greeting\n    printf(\"Hello\\n\");\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 2: Syntax & Comments [EASY]\n    /* Write your program below */\n\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 3,
+    title: "Output with printf()",
+    chapter: "C Fundamentals",
+    problem: "Use printf with format specifiers. Print: 'Age: 20', 'Marks: 87.50', 'Grade: A' on separate lines.",
+    hint: "Use %d for int, %.2f for float, %c for char. printf(\"Age: %d\\n\", 20);",
+    expectedOutput: "Age: 20\nMarks: 87.50\nGrade: A",
+    syntax: { c: "printf(\"Age: %d\\n\", 20);\nprintf(\"Marks: %.2f\\n\", 87.50);\nprintf(\"Grade: %c\\n\", 'A');" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    printf(\"Num: %d\\n\", 42);\n    printf(\"Float: %.1f\\n\", 3.5);\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 3: printf Format Specifiers [EASY]\n    // Objective: Print Age: 20, Marks: 87.50, Grade: A\n\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 4,
+    title: "Variables",
+    chapter: "C Fundamentals",
+    problem: "Declare int a = 10, b = 20. Compute sum = a + b. Print 'Sum = 30'.",
+    hint: "int a = 10; int b = 20; int sum = a + b; printf(\"Sum = %d\\n\", sum);",
+    expectedOutput: "Sum = 30",
+    syntax: { c: "int age = 20;\nfloat price = 25.5f;\nchar grade = 'A';" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    int x = 5, y = 7;\n    printf(\"Total: %d\\n\", x + y);\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 4: Variables [EASY]\n    // Declare a=10, b=20, compute sum, print 'Sum = 30'\n\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 5,
+    title: "Data Types",
+    chapter: "C Fundamentals",
+    problem: "Declare int age = 20, float height = 1.75f, char grade = 'A'. Print 'Age: 20', 'Height: 1.75', 'Grade: A' on separate lines.",
+    hint: "Use %d for int, %.2f for float, %c for char.",
+    expectedOutput: "Age: 20\nHeight: 1.75\nGrade: A",
+    syntax: { c: "int age = 20;\nfloat height = 1.75f;\nchar grade = 'A';\nprintf(\"Age: %d\\n\", age);" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    int n = 10;\n    float f = 5.5f;\n    printf(\"%d %.1f\\n\", n, f);\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 5: Data Types [EASY]\n    // Declare int, float, char and print them\n\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 6,
+    title: "Type Conversion and Constants",
+    chapter: "C Fundamentals",
+    problem: "Given int a = 5, b = 2. Compute double result = (double)a / b. Also declare const double PI = 3.14159. Print 'Division: 2.50' and 'PI: 3.14159'.",
+    hint: "Use (double)a / b to get floating-point division. Use const for PI.",
+    expectedOutput: "Division: 2.50\nPI: 3.14159",
+    syntax: { c: "double result = (double)5 / 2;\nconst double PI = 3.14159;" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    int a = 7, b = 2;\n    printf(\"%.2f\\n\", (double)a / b);\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 6: Type Conversion & Constants [EASY]\n    int a = 5, b = 2;\n\n    // Objective: Print 'Division: 2.50' and 'PI: 3.14159'\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 7,
+    title: "Operators",
+    chapter: "C Fundamentals",
+    problem: "Given int a = 17, b = 5. Print 'Sum = 22', 'Product = 85', 'Remainder = 2' on separate lines.",
+    hint: "Use +, *, and % operators with printf and %d.",
+    expectedOutput: "Sum = 22\nProduct = 85\nRemainder = 2",
+    syntax: { c: "int sum = a + b;\nint product = a * b;\nint remainder = a % b;" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    int a = 10, b = 3;\n    printf(\"%d %d\\n\", a + b, a % b);\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 7: Operators [EASY]\n    int a = 17, b = 5;\n\n    // Objective: Print Sum=22, Product=85, Remainder=2\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 8,
+    title: "User Input with scanf()",
+    chapter: "C Fundamentals",
+    problem: "Read two integers using scanf and print their sum. Since this is automated, hardcode: int a = 12, b = 8; Print 'Sum = 20'.",
+    hint: "Normally scanf(\"%d\", &a) reads input. Here just use hardcoded values and printf.",
+    expectedOutput: "Sum = 20",
+    syntax: { c: "int a, b;\nscanf(\"%d %d\", &a, &b);\nprintf(\"Sum = %d\\n\", a + b);" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    int a = 6, b = 4;\n    printf(\"Sum = %d\\n\", a + b);\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 8: Input with scanf [EASY]\n    // (Automated: use hardcoded values)\n    int a = 12, b = 8;\n\n    // Objective: Print 'Sum = 20'\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 9,
+    title: "Boolean Values and Conditions",
+    chapter: "C Fundamentals",
+    problem: "Given int age = 20, check if age >= 18 using bool isAdult. Print '1' (true in C).",
+    hint: "Include stdbool.h. bool isAdult = age >= 18; printf(\"%d\\n\", isAdult);",
+    expectedOutput: "1",
+    syntax: { c: "#include <stdbool.h>\nbool isAdult = age >= 18;\nprintf(\"%d\\n\", isAdult);" },
+    example: { c: "#include <stdio.h>\n#include <stdbool.h>\nint main(void) {\n    bool flag = 5 > 3;\n    printf(\"%d\\n\", flag);\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n#include <stdbool.h>\n\nint main(void) {\n    // Level 9: Boolean Values [EASY]\n    int age = 20;\n\n    // Objective: Print '1' if age >= 18\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 10,
+    title: "Math Functions",
+    chapter: "C Fundamentals",
+    problem: "Use math.h functions. Print 'Square root = 5.00' for sqrt(25.0) and 'Power = 8.00' for pow(2.0, 3.0).",
+    hint: "Include math.h. Use sqrt(25.0) and pow(2.0, 3.0) with %.2f.",
+    expectedOutput: "Square root = 5.00\nPower = 8.00",
+    syntax: { c: "#include <math.h>\nprintf(\"%.2f\\n\", sqrt(25.0));\nprintf(\"%.2f\\n\", pow(2.0, 3.0));" },
+    example: { c: "#include <stdio.h>\n#include <math.h>\nint main(void) {\n    printf(\"%.2f\\n\", sqrt(16.0));\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n#include <math.h>\n\nint main(void) {\n    // Level 10: Math Functions [EASY]\n    // Objective: Print 'Square root = 5.00' and 'Power = 8.00'\n\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 11,
+    title: "if, else if and else",
+    chapter: "Logic & Repetition",
+    problem: "Given int mark = 65. If mark >= 40 print 'Pass', else print 'Fail'. Expected: 'Pass'.",
+    hint: "if (mark >= 40) printf(\"Pass\\n\"); else printf(\"Fail\\n\");",
+    expectedOutput: "Pass",
+    syntax: { c: "if (condition) {\n    // code\n} else if (condition) {\n    // code\n} else {\n    // code\n}" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    int x = 10;\n    if (x > 5) printf(\"Big\\n\");\n    else printf(\"Small\\n\");\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 11: if-else [EASY]\n    int mark = 65;\n\n    // Objective: Print 'Pass' if mark >= 40, else 'Fail'\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 12,
+    title: "switch Statement",
+    chapter: "Logic & Repetition",
+    problem: "Given int choice = 2. Use switch: case 1 prints 'Monday', case 2 prints 'Tuesday', default prints 'Invalid'. Expected: 'Tuesday'.",
+    hint: "switch(choice) { case 2: printf(\"Tuesday\\n\"); break; }",
+    expectedOutput: "Tuesday",
+    syntax: { c: "switch (choice) {\n    case 1: printf(\"Monday\\n\"); break;\n    case 2: printf(\"Tuesday\\n\"); break;\n    default: printf(\"Invalid\\n\");\n}" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    int d = 1;\n    switch(d) {\n        case 1: printf(\"Mon\\n\"); break;\n        default: printf(\"Other\\n\");\n    }\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 12: switch Statement [EASY]\n    int choice = 2;\n\n    // Objective: Print 'Tuesday' using switch\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 13,
+    title: "while Loop",
+    chapter: "Logic & Repetition",
+    problem: "Use a while loop to print numbers from 1 to 5 separated by spaces: '1 2 3 4 5'.",
+    hint: "int i = 1; while (i <= 5) { printf(\"%d \", i); i++; }",
+    expectedOutput: "1 2 3 4 5",
+    syntax: { c: "while (condition) {\n    // repeated code\n    // update variable\n}" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    int i = 1;\n    while (i <= 3) { printf(\"%d \", i); i++; }\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 13: while Loop [EASY]\n    // Objective: Print '1 2 3 4 5' using a while loop\n\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 14,
+    title: "for Loop",
+    chapter: "Logic & Repetition",
+    problem: "Use a for loop to print the 3 times table from 3x1 to 3x5. Print '3 x 1 = 3' through '3 x 5 = 15', each on a new line.",
+    hint: "for (int i = 1; i <= 5; i++) printf(\"3 x %d = %d\\n\", i, 3 * i);",
+    expectedOutput: "3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9\n3 x 4 = 12\n3 x 5 = 15",
+    syntax: { c: "for (int i = 1; i <= n; i++) {\n    // repeated code\n}" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    for (int i = 1; i <= 3; i++)\n        printf(\"%d\\n\", i);\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 14: for Loop [EASY]\n    // Objective: Print 3 times table from 3x1=3 to 3x5=15\n\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 15,
+    title: "break and continue",
+    chapter: "Logic & Repetition",
+    problem: "Loop from 1 to 10. Skip 5 with continue. Print all others separated by spaces: '1 2 3 4 6 7 8 9 10'.",
+    hint: "for (int i = 1; i <= 10; i++) { if (i == 5) continue; printf(\"%d \", i); }",
+    expectedOutput: "1 2 3 4 6 7 8 9 10",
+    syntax: { c: "if (condition) break;\nif (condition) continue;" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    for (int i = 1; i <= 5; i++) {\n        if (i == 3) continue;\n        printf(\"%d \", i);\n    }\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 15: break & continue [EASY]\n    // Objective: Print 1-10 skipping 5: '1 2 3 4 6 7 8 9 10'\n\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 16,
+    title: "Arrays",
+    chapter: "Logic & Repetition",
+    problem: "Create int a[5] = {10, 20, 30, 40, 50}. Sum all elements using a loop. Print 'Sum = 150'.",
+    hint: "int sum = 0; for (int i = 0; i < 5; i++) sum += a[i];",
+    expectedOutput: "Sum = 150",
+    syntax: { c: "int a[5] = {10, 20, 30, 40, 50};\nprintf(\"%d\", a[0]);" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    int a[3] = {5, 10, 15};\n    printf(\"%d\\n\", a[0] + a[1]);\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 16: Arrays [MEDIUM]\n    int a[5] = {10, 20, 30, 40, 50};\n\n    // Objective: Sum all elements and print 'Sum = 150'\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 17,
+    title: "Strings",
+    chapter: "Logic & Repetition",
+    problem: "Create char name[] = \"Harsha\". Print 'Name: Harsha' and 'Length: 6' using strlen.",
+    hint: "Include string.h. printf(\"Name: %s\\n\", name); printf(\"Length: %zu\\n\", strlen(name));",
+    expectedOutput: "Name: Harsha\nLength: 6",
+    syntax: { c: "#include <string.h>\nchar name[50] = \"Harsha\";\nprintf(\"%zu\", strlen(name));" },
+    example: { c: "#include <stdio.h>\n#include <string.h>\nint main(void) {\n    char s[] = \"Hello\";\n    printf(\"%s %zu\\n\", s, strlen(s));\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    // Level 17: Strings [MEDIUM]\n    char name[] = \"Harsha\";\n\n    // Objective: Print 'Name: Harsha' and 'Length: 6'\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 18,
+    title: "Nested Loops and Patterns",
+    chapter: "Logic & Repetition",
+    problem: "Use nested loops to print a right triangle of stars with 4 rows: '*', '**', '***', '****' each on a new line.",
+    hint: "for (int r = 1; r <= 4; r++) { for (int c = 1; c <= r; c++) printf(\"*\"); printf(\"\\n\"); }",
+    expectedOutput: "*\n**\n***\n****",
+    syntax: { c: "for (int row = 1; row <= n; row++) {\n    for (int col = 1; col <= row; col++)\n        printf(\"*\");\n    printf(\"\\n\");\n}" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    for (int r = 1; r <= 3; r++) {\n        for (int c = 1; c <= r; c++) printf(\"*\");\n        printf(\"\\n\");\n    }\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 18: Nested Loops & Patterns [MEDIUM]\n    // Objective: Print 4-row star triangle: * ** *** ****\n\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 19,
+    title: "Functions",
+    chapter: "Functions & Pointers",
+    problem: "Write a function int add(int a, int b) that returns a + b. Call add(10, 20) and print '30'.",
+    hint: "int add(int a, int b) { return a + b; } Then printf(\"%d\\n\", add(10, 20));",
+    expectedOutput: "30",
+    syntax: { c: "return_type function_name(params) {\n    // body\n    return value;\n}" },
+    example: { c: "#include <stdio.h>\nint square(int n) { return n * n; }\nint main(void) {\n    printf(\"%d\\n\", square(5));\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\n// Level 19: Functions [MEDIUM]\n// Objective: Write add(int, int) and call add(10, 20)\n// WRITE YOUR FUNCTION BELOW:\n\nint main(void) {\n    // Call add(10, 20) and print '30'\n\n    return 0;\n}" }
+  },
+  {
+    level: 20,
+    title: "Function Parameters and Return Values",
+    chapter: "Functions & Pointers",
+    problem: "Write double average(int a, int b, int c) returning (a+b+c)/3.0. Call average(70, 80, 90) and print '80.00'.",
+    hint: "double average(int a, int b, int c) { return (a + b + c) / 3.0; }",
+    expectedOutput: "80.00",
+    syntax: { c: "double average(int a, int b, int c) {\n    return (a + b + c) / 3.0;\n}" },
+    example: { c: "#include <stdio.h>\nint multiply(int x, int y) { return x * y; }\nint main(void) {\n    printf(\"%d\\n\", multiply(3, 4));\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\n// Level 20: Parameters & Return Values [MEDIUM]\n// Write average(int, int, int) returning (a+b+c)/3.0\n// WRITE YOUR FUNCTION BELOW:\n\nint main(void) {\n    // Call average(70, 80, 90) and print '80.00'\n\n    return 0;\n}" }
+  },
+  {
+    level: 21,
+    title: "Function Declaration, Definition and Scope",
+    chapter: "Functions & Pointers",
+    problem: "Declare int square(int n) before main, define it after main. Call square(5) and print '25'.",
+    hint: "int square(int n); is the prototype. Definition goes after main.",
+    expectedOutput: "25",
+    syntax: { c: "int square(int n);  // Declaration\n\nint main(void) {\n    printf(\"%d\\n\", square(5));\n}\n\nint square(int n) { return n * n; }  // Definition" },
+    example: { c: "#include <stdio.h>\nint doubleIt(int n);\nint main(void) { printf(\"%d\\n\", doubleIt(7)); return 0; }\nint doubleIt(int n) { return n * 2; }" },
+    starter: { c: "#include <stdio.h>\n\n// Level 21: Declaration & Definition [MEDIUM]\n// Declare square(int) here, define it after main\n// WRITE YOUR DECLARATION BELOW:\n\nint main(void) {\n    // Call square(5) and print '25'\n\n    return 0;\n}\n\n// Define square(int) here:\n" }
+  },
+  {
+    level: 22,
+    title: "Recursion",
+    chapter: "Functions & Pointers",
+    problem: "Write recursive int factorial(int n). Compute factorial(5) and print '120'.",
+    hint: "if (n <= 1) return 1; return n * factorial(n - 1);",
+    expectedOutput: "120",
+    syntax: { c: "int factorial(int n) {\n    if (n <= 1) return 1;\n    return n * factorial(n - 1);\n}" },
+    example: { c: "#include <stdio.h>\nint sum(int n) {\n    if (n == 0) return 0;\n    return n + sum(n - 1);\n}\nint main(void) { printf(\"%d\\n\", sum(5)); return 0; }" },
+    starter: { c: "#include <stdio.h>\n\n// Level 22: Recursion [MEDIUM]\n// Write recursive factorial(int n)\n// WRITE YOUR FUNCTION BELOW:\n\nint main(void) {\n    // Call factorial(5) and print '120'\n\n    return 0;\n}" }
+  },
+  {
+    level: 23,
+    title: "Function Pointers",
+    chapter: "Functions & Pointers",
+    problem: "Create int add(int a, int b). Use a function pointer int (*op)(int, int) = add. Call op(5, 3) and print '8'.",
+    hint: "int (*op)(int, int) = add; printf(\"%d\\n\", op(5, 3));",
+    expectedOutput: "8",
+    syntax: { c: "int (*operation)(int, int);\noperation = add;\noperation(5, 3);" },
+    example: { c: "#include <stdio.h>\nint add(int a, int b) { return a + b; }\nint main(void) {\n    int (*op)(int, int) = add;\n    printf(\"%d\\n\", op(3, 4));\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\n// Level 23: Function Pointers [MEDIUM]\nint add(int a, int b) { return a + b; }\n\nint main(void) {\n    // Use a function pointer to call add(5, 3) and print '8'\n\n    return 0;\n}" }
+  },
+  {
+    level: 24,
+    title: "Memory Addresses and Pointers",
+    chapter: "Functions & Pointers",
+    problem: "Create int number = 10. Use int *ptr = &number. Change *ptr = 25. Print number: '25'.",
+    hint: "int *ptr = &number; *ptr = 25; printf(\"%d\\n\", number);",
+    expectedOutput: "25",
+    syntax: { c: "int number = 10;\nint *ptr = &number;\n*ptr = 25;\nprintf(\"%d\", number);" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    int x = 42;\n    int *p = &x;\n    printf(\"%d\\n\", *p);\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 24: Pointers [MEDIUM]\n    int number = 10;\n\n    // Objective: Use pointer to change number to 25, print '25'\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 25,
+    title: "Pointers and Arrays",
+    chapter: "Functions & Pointers",
+    problem: "Create int a[] = {10, 20, 30}. Use int *ptr = a. Access *(ptr + 1) and print '20'.",
+    hint: "int *ptr = a; printf(\"%d\\n\", *(ptr + 1));",
+    expectedOutput: "20",
+    syntax: { c: "int a[] = {10, 20, 30};\nint *ptr = a;\nprintf(\"%d\", *(ptr + 1));" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    int a[3] = {1, 2, 3};\n    int *p = a;\n    printf(\"%d %d\\n\", *p, *(p+2));\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 25: Pointers & Arrays [MEDIUM]\n    int a[] = {10, 20, 30};\n\n    // Objective: Use pointer to access index 1 and print '20'\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 26,
+    title: "Pointers to Pointers and NULL",
+    chapter: "Functions & Pointers",
+    problem: "Create int value = 10. Set int *ptr = &value, int **pptr = &ptr. Print **pptr: '10'.",
+    hint: "int **pptr = &ptr; printf(\"%d\\n\", **pptr);",
+    expectedOutput: "10",
+    syntax: { c: "int value = 10;\nint *ptr = &value;\nint **pptr = &ptr;\nprintf(\"%d\", **pptr);" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    int v = 99;\n    int *p = &v;\n    int **pp = &p;\n    printf(\"%d\\n\", **pp);\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 26: Pointer to Pointer [MEDIUM]\n    int value = 10;\n\n    // Objective: Use **pptr to print '10'\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 27,
+    title: "Inline Functions and Macros",
+    chapter: "Functions & Pointers",
+    problem: "Write static inline int square(int x) { return x * x; }. Call square(5) and print '25'.",
+    hint: "static inline int square(int x) { return x * x; } printf(\"%d\\n\", square(5));",
+    expectedOutput: "25",
+    syntax: { c: "static inline int square(int x) {\n    return x * x;\n}\n// Or: #define SQUARE(x) ((x) * (x))" },
+    example: { c: "#include <stdio.h>\nstatic inline int cube(int x) { return x * x * x; }\nint main(void) {\n    printf(\"%d\\n\", cube(3));\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\n// Level 27: Inline Functions & Macros [MEDIUM]\n// Write static inline square(int x) and call it with 5\n// WRITE YOUR CODE BELOW:\n\nint main(void) {\n    // Call square(5) and print '25'\n\n    return 0;\n}" }
+  },
+  {
+    level: 28,
+    title: "Structures (struct)",
+    chapter: "Structures & Memory",
+    problem: "Define struct Student { int id; char name[20]; int marks; }. Create one with id=101, name=\"Harsha\", marks=85. Print 'ID: 101 Name: Harsha Marks: 85'.",
+    hint: "struct Student s = {101, \"Harsha\", 85}; printf(\"ID: %d Name: %s Marks: %d\\n\", s.id, s.name, s.marks);",
+    expectedOutput: "ID: 101 Name: Harsha Marks: 85",
+    syntax: { c: "struct Student {\n    int id;\n    char name[20];\n    int marks;\n};" },
+    example: { c: "#include <stdio.h>\nstruct Point { int x; int y; };\nint main(void) {\n    struct Point p = {3, 4};\n    printf(\"%d %d\\n\", p.x, p.y);\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\n// Level 28: Structures [MEDIUM]\n// Define struct Student and print 'ID: 101 Name: Harsha Marks: 85'\n// WRITE YOUR CODE BELOW:\n\nint main(void) {\n    // Create a Student and print details\n\n    return 0;\n}" }
+  },
+  {
+    level: 29,
+    title: "Nested Structures",
+    chapter: "Structures & Memory",
+    problem: "Define struct Address { char city[20]; int zip; }. Define struct Employee { char name[20]; struct Address addr; }. Create one with name=\"John\", city=\"NYC\", zip=10001. Print 'John lives in NYC 10001'.",
+    hint: "Access nested members with dot: e.addr.city, e.addr.zip.",
+    expectedOutput: "John lives in NYC 10001",
+    syntax: { c: "struct Address { char city[20]; int zip; };\nstruct Employee {\n    char name[20];\n    struct Address addr;\n};" },
+    example: { c: "#include <stdio.h>\nstruct Inner { int val; };\nstruct Outer { struct Inner in; };\nint main(void) {\n    struct Outer o = { {42} };\n    printf(\"%d\\n\", o.in.val);\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\n// Level 29: Nested Structures [MEDIUM]\n// Define Address inside Employee, print 'John lives in NYC 10001'\n// WRITE YOUR CODE BELOW:\n\nint main(void) {\n    // Create Employee with nested Address\n\n    return 0;\n}" }
+  },
+  {
+    level: 30,
+    title: "Structures and Pointers (->)",
+    chapter: "Structures & Memory",
+    problem: "Define struct Point { int x; int y; }. Create struct Point p = {3, 4}. Use struct Point *ptr = &p. Access via ptr->x and ptr->y. Print '3 4'.",
+    hint: "ptr->x is shorthand for (*ptr).x. printf(\"%d %d\\n\", ptr->x, ptr->y);",
+    expectedOutput: "3 4",
+    syntax: { c: "struct Point *ptr = &p;\nprintf(\"%d\", ptr->x);\n// Same as (*ptr).x" },
+    example: { c: "#include <stdio.h>\nstruct Val { int n; };\nint main(void) {\n    struct Val v = {77};\n    struct Val *p = &v;\n    printf(\"%d\\n\", p->n);\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\n// Level 30: Structure Pointers [MEDIUM]\nstruct Point { int x; int y; };\n\nint main(void) {\n    struct Point p = {3, 4};\n    // Use pointer to access p's members and print '3 4'\n\n    return 0;\n}" }
+  },
+  {
+    level: 31,
+    title: "Enumerations (enum)",
+    chapter: "Structures & Memory",
+    problem: "Define enum Day { MON, TUE, WED, THU, FRI, SAT, SUN }. Set enum Day today = WED. Print its value: '2'.",
+    hint: "enum values start at 0. MON=0, TUE=1, WED=2. printf(\"%d\\n\", today);",
+    expectedOutput: "2",
+    syntax: { c: "enum Day { MON, TUE, WED, THU, FRI, SAT, SUN };\nenum Day today = WED;" },
+    example: { c: "#include <stdio.h>\nenum Color { RED, GREEN, BLUE };\nint main(void) {\n    enum Color c = GREEN;\n    printf(\"%d\\n\", c);\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\n// Level 31: Enumerations [MEDIUM]\n// Define enum Day and print the value of WED (which is 2)\n// WRITE YOUR CODE BELOW:\n\nint main(void) {\n    // Print '2'\n\n    return 0;\n}" }
+  },
+  {
+    level: 32,
+    title: "Unions",
+    chapter: "Structures & Memory",
+    problem: "Define union Data { int i; float f; char str[20]; }. Set d.i = 10 and print '10'. Then set d.f = 22.5 and print '22.50'.",
+    hint: "union Data d; d.i = 10; printf(\"%d\\n\", d.i); d.f = 22.5f; printf(\"%.2f\\n\", d.f);",
+    expectedOutput: "10\n22.50",
+    syntax: { c: "union Data {\n    int i;\n    float f;\n    char str[20];\n};" },
+    example: { c: "#include <stdio.h>\nunion Val { int i; float f; };\nint main(void) {\n    union Val v;\n    v.i = 42;\n    printf(\"%d\\n\", v.i);\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\n// Level 32: Unions [MEDIUM]\n// Define union Data, set i=10 print it, set f=22.5 print it\n// WRITE YOUR CODE BELOW:\n\nint main(void) {\n    // Print '10' then '22.50'\n\n    return 0;\n}" }
+  },
+  {
+    level: 33,
+    title: "Dynamic Memory: malloc",
+    chapter: "Structures & Memory",
+    problem: "Use malloc to allocate space for 5 ints. Set values 1,2,3,4,5. Print the sum: '15'. Free the memory.",
+    hint: "int *arr = malloc(5 * sizeof(int)); Fill it, sum it, free(arr);",
+    expectedOutput: "15",
+    syntax: { c: "#include <stdlib.h>\nint *arr = malloc(5 * sizeof(int));\n// use arr...\nfree(arr);" },
+    example: { c: "#include <stdio.h>\n#include <stdlib.h>\nint main(void) {\n    int *p = malloc(sizeof(int));\n    *p = 99;\n    printf(\"%d\\n\", *p);\n    free(p);\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    // Level 33: Dynamic Memory [MEDIUM]\n    // Allocate 5 ints with malloc, set 1-5, sum them, print '15'\n\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 34,
+    title: "Dynamic Memory: calloc and realloc",
+    chapter: "Structures & Memory",
+    problem: "Use calloc to allocate 3 ints (zeroed). Set them to 10, 20, 30. Use realloc to grow to 5. Set index 3=40, 4=50. Print sum: '150'.",
+    hint: "int *arr = calloc(3, sizeof(int)); ... arr = realloc(arr, 5 * sizeof(int));",
+    expectedOutput: "150",
+    syntax: { c: "int *arr = calloc(3, sizeof(int));\narr = realloc(arr, 5 * sizeof(int));\nfree(arr);" },
+    example: { c: "#include <stdio.h>\n#include <stdlib.h>\nint main(void) {\n    int *a = calloc(2, sizeof(int));\n    a[0] = 5; a[1] = 10;\n    printf(\"%d\\n\", a[0] + a[1]);\n    free(a);\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    // Level 34: calloc & realloc [MEDIUM]\n    // calloc 3 ints, set 10/20/30, realloc to 5, set 40/50, sum=150\n\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 35,
+    title: "typedef",
+    chapter: "Structures & Memory",
+    problem: "Use typedef to create typedef struct { int x; int y; } Point. Create Point p = {7, 3}. Print '7 3'.",
+    hint: "typedef struct { int x; int y; } Point; Point p = {7, 3}; printf(\"%d %d\\n\", p.x, p.y);",
+    expectedOutput: "7 3",
+    syntax: { c: "typedef struct {\n    int x;\n    int y;\n} Point;" },
+    example: { c: "#include <stdio.h>\ntypedef struct { int val; } Num;\nint main(void) {\n    Num n = {42};\n    printf(\"%d\\n\", n.val);\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\n// Level 35: typedef [MEDIUM]\n// Use typedef struct, create Point p={7,3}, print '7 3'\n// WRITE YOUR CODE BELOW:\n\nint main(void) {\n    // Print '7 3'\n\n    return 0;\n}" }
+  },
+  {
+    level: 36,
+    title: "Error Handling and errno",
+    chapter: "Structures & Memory",
+    problem: "Simulate safe division: int a = 10, b = 0. If b == 0, print 'Error: Division by zero!'. Otherwise print the result.",
+    hint: "if (b == 0) printf(\"Error: Division by zero!\\n\"); else printf(\"%d\\n\", a / b);",
+    expectedOutput: "Error: Division by zero!",
+    syntax: { c: "#include <errno.h>\nif (b == 0) {\n    printf(\"Error: Division by zero!\\n\");\n}" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    int x = 0;\n    if (x == 0) printf(\"Cannot divide\\n\");\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 36: Error Handling [HARD]\n    int a = 10, b = 0;\n\n    // Objective: If b==0 print 'Error: Division by zero!'\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 37,
+    title: "File Handling: Writing to a File",
+    chapter: "Files & Advanced C",
+    problem: "Since file I/O can't be verified in this sandbox, simulate by printing 'File written: Hello C'. Use the string that would be written.",
+    hint: "Normally: FILE *f = fopen(\"test.txt\", \"w\"); fprintf(f, \"Hello C\"); fclose(f); Here just print the confirmation.",
+    expectedOutput: "File written: Hello C",
+    syntax: { c: "FILE *f = fopen(\"test.txt\", \"w\");\nfprintf(f, \"Hello C\");\nfclose(f);" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    printf(\"File write simulated\\n\");\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 37: File Writing [HARD]\n    // Simulate writing 'Hello C' to a file\n    // Print 'File written: Hello C'\n\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 38,
+    title: "File Handling: Reading from a File",
+    chapter: "Files & Advanced C",
+    problem: "Simulate reading from a file. Print 'File read: Hello C' as if the file contained 'Hello C'.",
+    hint: "Normally: FILE *f = fopen(\"test.txt\", \"r\"); fgets(buf, 100, f); Here just print the simulated content.",
+    expectedOutput: "File read: Hello C",
+    syntax: { c: "FILE *f = fopen(\"test.txt\", \"r\");\nfgets(buffer, 100, f);\nfclose(f);" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    printf(\"File read simulated\\n\");\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 38: File Reading [HARD]\n    // Simulate reading 'Hello C' from a file\n    // Print 'File read: Hello C'\n\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 39,
+    title: "Bitwise Operators",
+    chapter: "Files & Advanced C",
+    problem: "Given int a = 12 (binary 1100), b = 10 (binary 1010). Compute a & b (AND) and print '8'.",
+    hint: "printf(\"%d\\n\", a & b); 12 & 10 = 8 (1000 in binary).",
+    expectedOutput: "8",
+    syntax: { c: "&  // AND\n|  // OR\n^  // XOR\n~  // NOT\n<< // left shift\n>> // right shift" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    printf(\"%d\\n\", 6 | 3);\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 39: Bitwise Operators [HARD]\n    int a = 12, b = 10;\n\n    // Objective: Compute a & b and print '8'\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 40,
+    title: "Macros and Preprocessor",
+    chapter: "Files & Advanced C",
+    problem: "Define #define PI 3.14159 and #define SQUARE(x) ((x) * (x)). Print PI with 5 decimals and SQUARE(5): '3.14159' then '25'.",
+    hint: "#define PI 3.14159 then printf(\"%.5f\\n\", PI); printf(\"%d\\n\", SQUARE(5));",
+    expectedOutput: "3.14159\n25",
+    syntax: { c: "#define PI 3.14159\n#define SQUARE(x) ((x) * (x))\nprintf(\"%.5f\", PI);" },
+    example: { c: "#include <stdio.h>\n#define DOUBLE(x) ((x) * 2)\nint main(void) {\n    printf(\"%d\\n\", DOUBLE(7));\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\n// Level 40: Macros & Preprocessor [HARD]\n// Define PI and SQUARE(x) macros, print PI=3.14159 and SQUARE(5)=25\n// WRITE YOUR MACROS BELOW:\n\nint main(void) {\n    // Print '3.14159' then '25'\n\n    return 0;\n}" }
+  },
+  {
+    level: 41,
+    title: "Header Files and Multiple Files",
+    chapter: "Files & Advanced C",
+    problem: "Since this is a single-file environment, simulate a header include by printing 'MathLib loaded: v1.0'.",
+    hint: "Normally you'd #include \"mathlib.h\". Here just print the simulation message.",
+    expectedOutput: "MathLib loaded: v1.0",
+    syntax: { c: "#include \"myheader.h\"\n// Custom header with function declarations" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    printf(\"Module loaded\\n\");\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 41: Header Files [HARD]\n    // Simulate header include, print 'MathLib loaded: v1.0'\n\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 42,
+    title: "Fixed-Width Integers (stdint.h)",
+    chapter: "Files & Advanced C",
+    problem: "Include stdint.h. Declare int32_t val = 100. Print 'Value: 100'.",
+    hint: "#include <stdint.h> then int32_t val = 100; printf(\"Value: %d\\n\", val);",
+    expectedOutput: "Value: 100",
+    syntax: { c: "#include <stdint.h>\nint32_t a = 100;\nint64_t b = 1000000;\nuint8_t c = 255;" },
+    example: { c: "#include <stdio.h>\n#include <stdint.h>\nint main(void) {\n    int16_t x = 32000;\n    printf(\"%d\\n\", x);\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n#include <stdint.h>\n\nint main(void) {\n    // Level 42: Fixed-Width Integers [HARD]\n    // Use int32_t, print 'Value: 100'\n\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 43,
+    title: "Command Line Arguments",
+    chapter: "Files & Advanced C",
+    problem: "Since args can't be passed in this sandbox, print 'Program: codequest' simulating argv[0].",
+    hint: "Normally: int main(int argc, char *argv[]). Here just print the simulated program name.",
+    expectedOutput: "Program: codequest",
+    syntax: { c: "int main(int argc, char *argv[]) {\n    printf(\"%s\\n\", argv[0]);\n    return 0;\n}" },
+    example: { c: "#include <stdio.h>\nint main(int argc, char *argv[]) {\n    printf(\"Args: %d\\n\", argc);\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 43: Command Line Arguments [HARD]\n    // Simulate argv[0], print 'Program: codequest'\n\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 44,
+    title: "Function Prototypes and Header Guards",
+    chapter: "Files & Advanced C",
+    problem: "Simulate a header guard by printing 'Header guard: PROTECTED'. This demonstrates the concept of #ifndef/#define/#endif.",
+    hint: "Normally #ifndef MYHEADER_H / #define MYHEADER_H / #endif. Here just print the message.",
+    expectedOutput: "Header guard: PROTECTED",
+    syntax: { c: "#ifndef MYHEADER_H\n#define MYHEADER_H\n// declarations\n#endif" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    printf(\"Protected\\n\");\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 44: Header Guards [HARD]\n    // Simulate header guard, print 'Header guard: PROTECTED'\n\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 45,
+    title: "Debugging: Finding Errors",
+    chapter: "Projects & Interview Prep",
+    problem: "Fix the following logic: a swap function that doesn't work because of pass-by-value. Instead, just print 'Debug: Swap fixed with pointers'.",
+    hint: "In C, to swap you need pointers: void swap(int *a, int *b). Here just print the confirmation.",
+    expectedOutput: "Debug: Swap fixed with pointers",
+    syntax: { c: "void swap(int *a, int *b) {\n    int temp = *a;\n    *a = *b;\n    *b = temp;\n}" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    printf(\"Bug fixed\\n\");\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 45: Debugging [HARD]\n    // Print 'Debug: Swap fixed with pointers'\n\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 46,
+    title: "Input Validation",
+    chapter: "Projects & Interview Prep",
+    problem: "Simulate input validation: given int age = -5. If age < 0, print 'Invalid age'. If age >= 0, print 'Valid age: -5' (but since -5 < 0, print 'Invalid age').",
+    hint: "if (age < 0) printf(\"Invalid age\\n\"); else printf(\"Valid age: %d\\n\", age);",
+    expectedOutput: "Invalid age",
+    syntax: { c: "if (age < 0) {\n    printf(\"Invalid age\\n\");\n} else {\n    printf(\"Valid age: %d\\n\", age);\n}" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    int n = -1;\n    if (n < 0) printf(\"Bad\\n\");\n    else printf(\"Good\\n\");\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 46: Input Validation [HARD]\n    int age = -5;\n\n    // Objective: If age < 0 print 'Invalid age'\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 47,
+    title: "Mini Project: Calculator",
+    chapter: "Projects & Interview Prep",
+    problem: "Build a simple calculator. Given a = 15, b = 4. Print all four operations: '15 + 4 = 19', '15 - 4 = 11', '15 * 4 = 60', '15 / 4 = 3'.",
+    hint: "printf(\"%d + %d = %d\\n\", a, b, a + b); etc. Integer division: 15 / 4 = 3.",
+    expectedOutput: "15 + 4 = 19\n15 - 4 = 11\n15 * 4 = 60\n15 / 4 = 3",
+    syntax: { c: "int a = 15, b = 4;\nprintf(\"%d + %d = %d\\n\", a, b, a + b);\nprintf(\"%d / %d = %d\\n\", a, b, a / b);" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    int a = 6, b = 2;\n    printf(\"%d + %d = %d\\n\", a, b, a + b);\n    printf(\"%d / %d = %d\\n\", a, b, a / b);\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 47: Mini Calculator Project [HARD]\n    int a = 15, b = 4;\n\n    // Objective: Print all 4 operations\n    // 15 + 4 = 19, 15 - 4 = 11, 15 * 4 = 60, 15 / 4 = 3\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 48,
+    title: "Mini Project: Number Guessing Game",
+    chapter: "Projects & Interview Prep",
+    problem: "Simulate a guessing game: int secret = 42, guess = 42. If guess == secret, print 'Correct! You guessed it!'.",
+    hint: "if (guess == secret) printf(\"Correct! You guessed it!\\n\");",
+    expectedOutput: "Correct! You guessed it!",
+    syntax: { c: "int secret = 42, guess = 42;\nif (guess == secret)\n    printf(\"Correct!\\n\");" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    int secret = 7, guess = 7;\n    if (guess == secret) printf(\"Win!\\n\");\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 48: Guessing Game [HARD]\n    int secret = 42, guess = 42;\n\n    // Objective: If guess == secret, print 'Correct! You guessed it!'\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 49,
+    title: "Revision: C Concepts Summary",
+    chapter: "Projects & Interview Prep",
+    problem: "Print a summary of key C concepts: 'C Mastery: Variables, Loops, Functions, Pointers, Structs, Memory'.",
+    hint: "Just one printf with the full string.",
+    expectedOutput: "C Mastery: Variables, Loops, Functions, Pointers, Structs, Memory",
+    syntax: { c: "printf(\"C Mastery: Variables, Loops, \");\nprintf(\"Functions, Pointers, Structs, Memory\\n\");" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    printf(\"C is powerful\\n\");\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 49: C Revision [HARD]\n    // Print the full C mastery summary\n\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  },
+  {
+    level: 50,
+    title: "GRAND FINALE: Complete C Assessment",
+    chapter: "Projects & Interview Prep",
+    problem: "Final challenge! Combine concepts: declare int arr[] = {5, 10, 15, 20, 25}. Use a loop and pointer to compute sum. Print 'Final Score: 75'.",
+    hint: "int *p = arr; int sum = 0; for (int i = 0; i < 5; i++) sum += *(p + i); printf(\"Final Score: %d\\n\", sum);",
+    expectedOutput: "Final Score: 75",
+    syntax: { c: "int arr[] = {5, 10, 15, 20, 25};\nint *p = arr;\nint sum = 0;\nfor (int i = 0; i < 5; i++)\n    sum += *(p + i);\nprintf(\"Final Score: %d\\n\", sum);" },
+    example: { c: "#include <stdio.h>\nint main(void) {\n    int a[3] = {1, 2, 3};\n    int *p = a;\n    printf(\"%d\\n\", *p + *(p+1) + *(p+2));\n    return 0;\n}" },
+    starter: { c: "#include <stdio.h>\n\nint main(void) {\n    // Level 50: GRAND FINALE [HARD]\n    int arr[] = {5, 10, 15, 20, 25};\n\n    // Objective: Use pointer arithmetic in a loop\n    // to sum all elements and print 'Final Score: 75'\n    // WRITE YOUR CODE BELOW:\n\n    return 0;\n}" }
+  }
+];
+
+module.exports = { cChapters, cLevels };

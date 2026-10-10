@@ -727,12 +727,42 @@ const raw50Levels = [
   }
 ];
 
+const { cChapters, cLevels } = require('./c-curriculum');
+
 const fullCurriculum = raw50Levels;
 
 function getLevelForLanguage(lang, levelNum) {
-  const item = fullCurriculum.find(l => l.level === parseInt(levelNum, 10)) || fullCurriculum[0];
   const l = (lang || 'python').toLowerCase();
-  const diff = getDifficulty(item.level);
+  const diff = getDifficulty(parseInt(levelNum, 10));
+
+  // Use dedicated C curriculum when language is C
+  if (l === 'c') {
+    const item = cLevels.find(lv => lv.level === parseInt(levelNum, 10)) || cLevels[0];
+    const getProp = (obj) => {
+      if (!obj) return null;
+      return obj.c || Object.values(obj)[0] || null;
+    };
+    return {
+      level: item.level,
+      chapter: item.chapter,
+      difficulty: diff.tier,
+      difficultyBadge: diff.badge,
+      difficultyColor: diff.color,
+      title: `Level ${item.level}: ${item.title}`,
+      problem: item.problem,
+      expectedOutput: item.expectedOutput || "Success",
+      hint: item.hint || `To pass this quest, ensure your output matches: '${item.expectedOutput}'`,
+      syntax: getProp(item.syntax) || "// Code syntax",
+      exampleCode: getProp(item.example) || "// Example code",
+      starterCode: getProp(item.starter) || "// Write your code below:",
+      exampleExplanation: `This demonstrates the pattern for ${item.title} in C.`,
+      explanation: `Level ${item.level} [${diff.tier}]: ${item.problem}`,
+      xpReward: item.level <= 15 ? 50 : (item.level <= 35 ? 75 : 100),
+      coinReward: item.level <= 15 ? 10 : (item.level <= 35 ? 15 : 25)
+    };
+  }
+
+  const item = fullCurriculum.find(l => l.level === parseInt(levelNum, 10)) || fullCurriculum[0];
 
   const getProp = (obj) => {
     if (!obj) return null;
@@ -763,5 +793,7 @@ module.exports = {
   chapters,
   fullCurriculum,
   getDifficulty,
-  getLevelForLanguage
+  getLevelForLanguage,
+  cChapters,
+  cLevels
 };

@@ -5,7 +5,7 @@ const os = require('os');
 const { execFile } = require('child_process');
 const vm = require('vm');
 const crypto = require('crypto');
-const { chapters, fullCurriculum, getDifficulty, getLevelForLanguage } = require('./curriculum');
+const { chapters, fullCurriculum, getDifficulty, getLevelForLanguage, cLevels } = require('./curriculum');
 
 const PORT = process.env.PORT || 8085;
 const PUBLIC_DIR = __dirname;
@@ -335,7 +335,9 @@ const server = http.createServer(async (req, res) => {
       const l = findLanguage(lang);
       if (!l) return sendJSON(res, 404, { message: 'Language not found' });
       
-      const out = fullCurriculum.map(item => {
+      const langLower = lang.toLowerCase();
+      const curriculumSrc = (langLower === 'c') ? cLevels : fullCurriculum;
+      const out = curriculumSrc.map(item => {
         const diff = getDifficulty(item.level);
         return {
           level: item.level,
@@ -378,7 +380,8 @@ const server = http.createServer(async (req, res) => {
       }
       const lang = (r.language || 'python').toLowerCase();
       const lvl = parseInt(r.level || '1', 10);
-      const lvlData = fullCurriculum.find(l => l.level === lvl) || fullCurriculum[0];
+      const curriculumSrc = (lang === 'c') ? cLevels : fullCurriculum;
+      const lvlData = curriculumSrc.find(l => l.level === lvl) || curriculumSrc[0];
 
       const execResult = await executeCode(lang, r.code, lvlData.expectedOutput);
 
@@ -469,7 +472,9 @@ const server = http.createServer(async (req, res) => {
       const r = await parseBody(req);
       const type = (r.type || 'hint').toLowerCase();
       const lvl = parseInt(r.level || '1', 10);
-      const lvlData = fullCurriculum.find(l => l.level === lvl) || fullCurriculum[0];
+      const rLang = (r.language || '').toLowerCase();
+      const curriculumSrc = (rLang === 'c') ? cLevels : fullCurriculum;
+      const lvlData = curriculumSrc.find(l => l.level === lvl) || curriculumSrc[0];
 
       let answer;
       switch (type) {
